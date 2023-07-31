@@ -62,7 +62,6 @@ public class ApplicationUser implements UserDetails{
         this.userId=userId;
     }
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
