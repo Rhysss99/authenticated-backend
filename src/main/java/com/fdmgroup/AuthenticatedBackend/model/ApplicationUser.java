@@ -19,6 +19,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+
 @Entity
 @Table(name="users")
 public class ApplicationUser implements UserDetails{
@@ -27,7 +28,7 @@ public class ApplicationUser implements UserDetails{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="user_id")
     private Integer userId;
-
+    @Column(unique = true)
     private String username;
 
     private String password;
