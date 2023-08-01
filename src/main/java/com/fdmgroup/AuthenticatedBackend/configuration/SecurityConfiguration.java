@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfiguration {
@@ -28,13 +29,15 @@ public class SecurityConfiguration {
         
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-            .httpBasic(Customizer.withDefaults())
-            .build();
-    }
-    
+   @Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    return http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> {
+            auth.requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll();
+            auth.anyRequest().authenticated();
+        } )
+        .httpBasic(Customizer.withDefaults())
+        .build();
+}
 }
